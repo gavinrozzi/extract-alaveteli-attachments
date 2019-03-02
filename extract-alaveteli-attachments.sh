@@ -4,7 +4,7 @@
 
 #Define some variables
 BASE_DIR=/home/gavin
-RAW_EMAILS_DIR=$BASE_DIR/opramachine-documents
+RAW_EMAILS_DIR=$BASE_DIR/opramachine-files
 OUTPUT_DIR=$BASE_DIR/files
 VIRUS_DIR=$BASE_DIR/viruses
 DOCUMENTS_S3_BUCKET=opramachine-documents
