@@ -3,10 +3,14 @@
 # Depends on mpack, clamav and s3cmd. Tested on Ubuntu 18.04
 
 #Define some variables
-RAW_EMAILS_DIR=/home/gavin/Documents/raw_emails
-OUTPUT_DIR=/home/gavin/Documents/OPRAmachine-dev/files
-VIRUS_DIR=/home/gavin/Documents/OPRAmachine-dev/viruses
-S3_BUCKET=opramachine-documents
+BASE_DIR=/home/gavin
+RAW_EMAILS_DIR=$BASE_DIR/opramachine-documents
+OUTPUT_DIR=$BASE_DIR/files
+VIRUS_DIR=$BASE_DIR/viruses
+DOCUMENTS_S3_BUCKET=opramachine-documents
+
+# Download latest OPRAmachine raw emails
+s3cmd sync s3://opramachine-files $RAW_EMAILS_DIR
 
 # Extract files from MIME attachments
 echo "Extracting files from Alaveteli emails"
@@ -20,4 +24,4 @@ find $OUTPUT_DIR -name "*.zip" -exec unzip -j -o {} \; -exec rm {} \;
 clamscan -r $OUTPUT_DIR --move=$VIRUS_DIR
 
 # Upload the final documents to Amazon S3
-s3cmd sync $OUTPUT_DIR/ s3://$S3_BUCKET/
+s3cmd sync $OUTPUT_DIR/ s3://$DOCUMENTS_S3_BUCKET/
